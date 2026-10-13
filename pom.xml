@@ -36,6 +36,13 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- PostgreSQL for Render's free trial database; MySQL remains available locally. -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
         <!-- Security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

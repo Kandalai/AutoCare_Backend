@@ -1,0 +1,52 @@
+databases:
+  - name: autocare-db-kandalai
+    databaseName: autocare_db
+    user: autocare
+    plan: free
+    region: singapore
+
+services:
+  - type: web
+    name: autocare-api-kandalai
+    runtime: docker
+    repo: https://github.com/Kandalai/AutoCare_Backend.git
+    branch: main
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: DB_CONNECTION_STRING
+        fromDatabase:
+          name: autocare-db-kandalai
+          property: connectionString
+      - key: DB_USERNAME
+        fromDatabase:
+          name: autocare-db-kandalai
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: autocare-db-kandalai
+          property: password
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ALLOWED_ORIGINS
+        value: https://autocare-frontend-kandalai.onrender.com
+      - key: JPA_DDL_AUTO
+        value: update
+      - key: JPA_SHOW_SQL
+        value: false
+
+  - type: web
+    name: autocare-frontend-kandalai
+    runtime: static
+    repo: https://github.com/Kandalai/AutoCare_Frontend.git
+    branch: main
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        value: https://autocare-api-kandalai.onrender.com/api
