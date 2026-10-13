@@ -15,10 +15,20 @@ services:
     region: singapore
     dockerfilePath: ./Dockerfile
     envVars:
-      - key: DB_CONNECTION_STRING
+      - key: DB_HOST
         fromDatabase:
           name: autocare-db-kandalai
-          property: connectionString
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: autocare-db-kandalai
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: autocare-db-kandalai
+          property: database
+      - key: SPRING_PROFILES_ACTIVE
+        value: render
       - key: DB_USERNAME
         fromDatabase:
           name: autocare-db-kandalai
