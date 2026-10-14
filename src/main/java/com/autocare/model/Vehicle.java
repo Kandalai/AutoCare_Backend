@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "vehicles")
@@ -33,7 +35,7 @@ public class Vehicle {
 
     private String vin;
 
-    @Column(columnDefinition = "MEDIUMTEXT")
+    @JdbcTypeCode(SqlTypes.LONG32VARCHAR)
     private String imageUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
